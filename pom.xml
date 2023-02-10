@@ -65,6 +65,16 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.basedir}</main.basedir>
+        
+        <!-- JaCoCo Properties -->
+		<jacoco.version>0.8.6</jacoco.version>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.language>java</sonar.language>
+		
+        <sonar.organization>aissprojects23</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  
     </properties>
 
     <dependencyManagement>
@@ -122,6 +132,12 @@
                     <version>2.4</version>
                     <scope>test</scope>
             </dependency>
+            <dependency>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<!-- <version>${jacoco.version}</version> -->
+				<version>0.8.6</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -304,6 +320,28 @@
                         </lifecycleMappingMetadata>
                     </configuration>
                 </plugin>
+                
+                <plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
             </plugins>
         </pluginManagement>
         <plugins>
